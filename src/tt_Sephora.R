@@ -213,7 +213,7 @@ pt.body <- ggplot() +
     panel.grid.minor=element_blank(),
     plot.caption = element_text(hjust = 0.5, colour = 'grey30'),
     plot.caption.position =  "plot",
-    plot.margin = margin(0),
+    plot.margin = margin(0)
   )
 
 
