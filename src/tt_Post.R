@@ -89,6 +89,16 @@ ggplot(
     alpha = 0.75) +
   labs(caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)\nData from TidyTuesday via Cameron and Helbock 2021 - https://doi.org/10.7910/DVN/NUKCNA") + 
   theme_void() + 
+  guides(
+    fill = guide_colourbar(
+      barwidth = 30,
+      barheight = 0.5,
+      ticks = FALSE,
+      title.hjust = 0.5,
+      title = 'Net Change In Number Of Operating Post Offices',
+      title.position = 'bottom',
+      label.theme = element_text(family = 'Bebas', color = 'grey50'),
+      title.theme = element_text(family = 'Bebas', color = 'grey50'))) + 
   theme(
     panel.background = element_rect(color = bg, fill = bg),
     plot.background = element_rect(fill = bg, color = bg),
@@ -96,7 +106,7 @@ ggplot(
     panel.border  = element_blank(),
     plot.caption = element_text(family = 'Bebas', color = 'grey20'),
     plot.caption.position = 'plot',
-    legend.position = 'none') + 
+    legend.position = 'bottom') + 
   ggsave(
     filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
     width = 20,
