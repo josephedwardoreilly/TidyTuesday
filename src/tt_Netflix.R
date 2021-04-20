@@ -72,7 +72,7 @@ dt[`Production Industry`== 'India',
 
 # Plotting ----------------------------------------------------------------
 
-pal = c("#BA181B", "#221F1F", "#E4E4D0")
+pal = c("#E50914", "#221F1F", "#E4E4D0")
 bg = '#F5F5F1'
 
 ggplot(dt, 
