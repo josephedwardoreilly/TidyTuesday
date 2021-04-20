@@ -2,7 +2,6 @@ library(tidytuesdayR)
 library(ggplot2)
 library(data.table)
 library(ggtext)
-library(patchwork)
 # Data Prep ---------------------------------------------------------------
 # Read the data
 tidy.week <- '2021-04-20'
@@ -57,7 +56,7 @@ dt <- merge(
   by = 'actor'
 )
 
-# Add total number of credits to each actor
+# paste total number of credits to each actor's name
 dt[,actor := paste0(
   '(',
   total,
@@ -65,13 +64,15 @@ dt[,actor := paste0(
   actor)]
 
 # Rename the countries to reflect the industry instead
-dt[`Production Industry` == 'United States', `Production Industry` := 'Hollywood']
-dt[`Production Industry`== 'India', `Production Industry` := 'Bollywood']
+dt[`Production Industry` == 'United States',
+   `Production Industry` := 'Hollywood']
+dt[`Production Industry`== 'India',
+   `Production Industry` := 'Bollywood']
 
 
 # Plotting ----------------------------------------------------------------
 
-pal = c("#221F1F", "#E4E4D0", "#BA181B")
+pal = c("#BA181B", "#221F1F", "#E4E4D0")
 bg = '#F5F5F1'
 
 ggplot(dt, 
@@ -87,21 +88,37 @@ ggplot(dt,
   labs(
     title = 'The 75 Most Credited People On Netflix',
     subtitle = "Hollywood stars are not the most highly credited on Netflix. Each circle represents the number of unique films or TV shows that an individual featured in for a given year. The larger a circle, the more credits a given individual had in that year. The colour of the cirlce represents the production industry each individual is most prevalent in: Hollywood (USA), Bollywood (India), or Other. The value next to each individual's name is their total number of credits on Netflix.",
-    caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)") + 
+    caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)\nData from TidyTuesday - Kaggle") + 
   scale_y_discrete(position = "right") +
   xlab('Year Of Release') + 
+  guides(
+    size = FALSE,
+    fill = guide_legend(override.aes = list(size = 3)))+
   theme(
+    legend.box.background = element_rect(
+      color = 'black',
+      fill = NA),
+    legend.box.margin  = margin(2,2,2,2),
     legend.position = 'top',
-    panel.background = element_rect(color = NA, fill = bg),
-    axis.text.x = element_text(color = 'grey20'),
+    panel.background = element_rect(
+      color = NA,
+      fill = bg),
+    axis.text.x = element_text(
+      color = 'grey20'),
     axis.title.x = element_text(
       color = 'grey20',
       hjust = 0.5,
       margin = margin(5, 0, 0,0 )),
-    axis.text.y = element_text(color = 'grey20', hjust = 0, size = 8),
-    panel.grid.major.y = element_line(color = 'grey80'),
+    axis.text.y = element_text(
+      color = 'grey20',
+      hjust = 0,
+      size = 8),
+    panel.grid.major.y = element_line(
+      color = 'grey80'),
     text = element_text('Bebas'),
-    plot.background = element_rect(fill = bg, color = bg),
+    plot.background = element_rect(
+      fill = bg, 
+      color = bg),
     plot.margin = margin(c(10, 20 , 5, 20)),
     plot.caption.position = 'plot',
     plot.caption = element_text(
@@ -114,16 +131,20 @@ ggplot(dt,
       width = grid::unit(1, "npc"),
       colour = '#221F1F',
       hjust = 0.5, halign = 0, 
-      size = 9,
+      size = 10,
       margin = margin(5, 10, 30, 10)),
-    plot.title.position = 'panel',
+    plot.title.position = 'plot',
     plot.title = element_text(
       family = 'Bebas',
       colour = '#E50914',
-      hjust = 0,
-      size = 30,
+      hjust = 0.5,
+      size = 32,
       margin = margin(0, 10, 10, 10))) + 
-  guides(size = FALSE)
+  ggsave(
+    filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
+    width = 10,
+    height = 12,
+    device = 'png')
 
 
 
