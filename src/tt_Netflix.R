@@ -87,7 +87,7 @@ ggplot(dt,
   coord_equal(clip = 'off') +
   labs(
     title = 'The 75 Most Credited People On Netflix',
-    subtitle = "Hollywood stars are not the most highly credited on Netflix. Each circle represents the number of unique films or TV shows that an individual featured in for a given year. The larger a circle, the more credits a given individual had in that year. The colour of the cirlce represents the production industry each individual is most prevalent in: Hollywood (USA), Bollywood (India), or Other. The value next to each individual's name is their total number of credits on Netflix.",
+    subtitle = "Hollywood stars are not the most highly credited on Netflix. Each circle represents the number of unique films or TV shows that an individual featured in for a given year. The larger a circle, the more credits a given individual had in that year. The colour of each circle represents the production industry each individual is most prevalent in: Hollywood (USA), Bollywood (India), or Other. The value next to each individual's name is their total number of credits on Netflix.",
     caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)\nData from TidyTuesday - Kaggle") + 
   scale_y_discrete(position = "right") +
   xlab('Year Of Release') + 
@@ -95,8 +95,9 @@ ggplot(dt,
     size = FALSE,
     fill = guide_legend(override.aes = list(size = 3)))+
   theme(
+    legend.margin = margin(5, 5, 5, 5),
     legend.box.background = element_rect(
-      color = 'black',
+      color = 'grey80',
       fill = NA),
     legend.box.margin  = margin(2,2,2,2),
     legend.position = 'top',
@@ -108,7 +109,7 @@ ggplot(dt,
     axis.title.x = element_text(
       color = 'grey20',
       hjust = 0.5,
-      margin = margin(5, 0, 0,0 )),
+      margin = margin(5, 0, 0, 0)),
     axis.text.y = element_text(
       color = 'grey20',
       hjust = 0,
