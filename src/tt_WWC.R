@@ -112,7 +112,7 @@ build.plot <- function(team = 'USA', df, dt, wc.index, dt.champions){
     geom_point(
       data = dt.champions[nation == team],
       inherit.aes = FALSE,
-      aes(x = id, y = gf + .5),
+      aes(x = x, y = gf + .5),
       fill = '#E9C63A',
       shape = 25,
       size = 1.5,
@@ -264,6 +264,12 @@ dt.champions <- dt.champions[outcome == 'win' |
                                # USA/JPN won on penalties in 1999 and 2011
                                (nation == 'USA' & year == 1999) |
                                (nation == 'JPN' & year == 2011)]
+# Add an offset to the plot point, to account for the polygon offset
+dt.champions <- merge(
+  dt.champions[,.(nation, id, gf, ga)],
+  # merge on the second polygon point x-value + (width *.5)
+  df[ , .SD[2, .(x = x + (width/2))], by = .(nation, id)],
+  by = c('nation', 'id'))
 
 # coordinates for the start of each WWC
 # used to plot labels and delimiting lines
