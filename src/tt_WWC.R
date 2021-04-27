@@ -130,7 +130,9 @@ build.plot <- function(team = 'USA', df, dt, wc.index, dt.champions){
            fill = FALSE) +
     theme_void() +
     theme(panel.spacing.y = unit(0, "lines"),
-          plot.margin = margin(20, 0, 20, 0))
+          plot.margin = margin(20, 0, 20, 0),
+          plot.background = element_rect(fill = '#f5f9ff', color = NA),
+          panel.border = element_blank())
   
   return(p)
 }
@@ -270,6 +272,9 @@ dt.champions <- merge(
   # merge on the second polygon point x-value + (width *.5)
   df[ , .SD[2, .(x = x + (width/2))], by = .(nation, id)],
   by = c('nation', 'id'))
+# if final finished 0-0, make the correct height adjustment to plot onto the
+# geom used to represent 0-0
+dt.champions[gf == 0 & ga == 0, gf := 1.25]
 
 # coordinates for the start of each WWC
 # used to plot labels and delimiting lines
@@ -282,8 +287,8 @@ wc.index <- all.apps[, .(md = min(id)), by = year]
 
 # Define some national team colours, based on the team badge
 pal.usa <- c(
-  'win' = '#1f2742',
-  'draw' = 'white',
+  'draw' = '#1f2742',
+  'win' = 'white',
   'loss' = '#bb2533'
 )
 
@@ -294,9 +299,9 @@ pal.jpn <- c(
 )
 
 pal.ger <- c(
-  'win' = '#ffcc2a',
-  'draw' = 'white',
-  'loss' = '#d73135'
+  'win' = '#00a768',
+  'draw' = '#7a7878',
+  'loss' = '#d80f18'
 )
 
 pal.nor <- c(
