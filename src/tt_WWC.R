@@ -130,9 +130,81 @@ build.plot <- function(team = 'USA', df, dt, wc.index, dt.champions){
            fill = FALSE) +
     theme_void() +
     theme(panel.spacing.y = unit(0, "lines"),
-          plot.margin = margin(20, 0, 20, 0),
+          plot.margin = margin(10, 30, 10, 30),
           plot.background = element_rect(fill = '#f5f9ff', color = NA),
-          panel.border = element_blank())
+          panel.border = element_blank(),
+          plot.title = element_text(family = 'Quicksand'),
+          plot.caption = element_text(
+            family = 'Quicksand',
+            color = 'grey30',
+            size = 7))
+  
+  return(p)
+}
+
+# Build a small version of elements from the main plot to act as a guide 
+# presenting how the plot is to be interpreted
+build.guide <- function(df.guide, dt.guide, dt.guide.champions){
+  p <- ggplot(df.guide) + 
+    # add timeline 
+    geom_hline(yintercept = 0, size = .5) +
+    # Draw bars
+    geom_polygon(
+      aes(
+        fill = outcome,
+        group = md,
+        x = x,
+        y = y),
+      color = 'black',
+      size = .5) +
+    # draw 'no goal' points
+    geom_point(
+      data = dt.guide,
+      inherit.aes = FALSE,
+      aes(x = x, y = y),
+      fill = 'black',
+      shape = 21,
+      size = 1,
+      stroke = 1) +
+    # draw 'no score draw' points
+    geom_point(
+      data = dt.guide[score == FALSE],
+      inherit.aes = FALSE,
+      aes(x = x, y = y),
+      fill = 'white',
+      shape = 21,
+      size = 2,
+      stroke = 1) +
+    # draw markers for champions up
+    geom_point(
+      data = dt.guide.champions,
+      inherit.aes = FALSE,
+      aes(x = x, y = gf + .5),
+      fill = '#E9C63A',
+      shape = 25,
+      size = 1.5,
+      stroke = .5) +
+    scale_x_continuous(
+      expand = c(0, 0),
+      limits = as.numeric(
+        df.guide[, c(min(md), max(id) + 1)])) + 
+    scale_y_continuous(
+      expand = c(0, 0),
+      limits = as.numeric(
+        df.guide[, c(min(y), max(y) + 1)])) + 
+    coord_equal(clip = 'off') + 
+    guides(color = FALSE,
+           fill = FALSE) +
+    theme_void() +
+    theme(panel.spacing.y = unit(0, "lines"),
+          plot.margin = margin(10, 30, 10, 30),
+          plot.background = element_rect(fill = '#f5f9ff', color = 'grey50'),
+          panel.border = element_blank(),
+          plot.title = element_text(family = 'Quicksand'),
+          plot.caption = element_text(
+            family = 'Quicksand',
+            color = 'grey30',
+            size = 7))
   
   return(p)
 }
@@ -326,19 +398,41 @@ df.wc.labels <- data.frame(
 )
 
 
+  
 # build the individual panels
+p.text <- ggplot() +
+  geom_textbox(
+    data = data.frame(
+      x = 0.5,
+      y = 0.5,
+      label = "Performance Of The Four FIFA Womens World Cup Champions"),
+    aes(x, y, label = label),
+    color = 'Black',
+    box.color = NA,
+    fill = NA,
+    family = 'Quicksand',
+    size = 5,
+    width = grid::unit(0.9, "npc"), 
+    hjust = 0.5, vjust = 0.5, halign = 0) +
+  scale_y_continuous(limits = c(0.48, 0.51)) + 
+  theme_void() + 
+  theme(plot.margin = margin(0, 0, 0, 0),
+        plot.background = element_rect(fill = '#f5f9ff', color = NA)) 
+
 p.usa <- build.plot('USA', df, dt, wc.index, dt.champions) + 
   scale_fill_manual(values = pal.usa) + 
   geom_richtext(data = df.wc.labels, # Add wc year annotations
                 mapping = aes(x = x, y = y, label = label),
-                color = 'grey50',
+                color = 'grey10',
+                family = 'Quicksand',
                 size = 2,
                 fill = NA,
                 label.color = NA,
                 hjust = 0,
                 vjust = 0.5) +
+  #theme(plot.margin = margin(75, 30, 10, 30)) + 
   labs(title = 'USA')
-
+  
 p.jpn <- build.plot('JPN', df, dt, wc.index, dt.champions) + 
   scale_fill_manual(values = pal.jpn) +
   labs(title = 'Japan')
@@ -351,10 +445,144 @@ p.nor <- build.plot('NOR', df, dt, wc.index, dt.champions) +
   scale_fill_manual(values = pal.nor) +
   labs(title = 'Norway')
 
+
+
+
+
+
+
+
+
+# Build a legend
+  # win, loss, draw, goaless draw, champion
+zz.guide <- data.table(id = c(1, 3, 5, 7, 9),
+                       gf = c(2, 1, 1, 0, 2),
+                       ga = c(1, 2, 1, 0, 1),
+                       outcome = c('win', 'loss', 'draw', 'draw', 'win'))
+
+df.guide <- zz.guide[,
+               .build.poly(md = id, gf = gf, ga = ga, width = width), by = .(id)]
+df.guide <- merge(
+  df.guide,
+  zz.guide[, .(md = as.character(id), outcome)],
+  by = c('md'))
+
+dt.guide <- 
+  zz.guide[gf == 0 | ga == 0,
+     .(gf, ga, x = id + (width/2), y = 1)][
+       ga == 0 & gf != 0, y := -y][, score := TRUE]
+# then deal with goalless draws
+dt.guide <- rbind(
+  dt.guide,
+  dt.guide[gf == 0 & ga == 0, .(gf, ga, x, y= -y, score = TRUE)], 
+  dt.guide[gf == 0 & ga == 0, .(gf, ga, x, y= 0, score = FALSE)]
+)
+
+
+dt.guide.champions <- data.table(id = 9, gf = 2, ga = 1)
+dt.guide.champions <- merge(
+  dt.guide.champions,
+  # merge on the second polygon point x-value + (width *.5)
+  df.guide[ , .SD[2, .(x = x + (width/2))], by = .(id)],
+  by = 'id')
+
+p.guide <- build.guide(df.guide, dt.guide, dt.guide.champions) +
+  scale_fill_manual(values = pal.usa) + 
+  theme_void() + 
+  scale_x_continuous(limits = c(0, 10.5)) + 
+  scale_y_continuous(limits = c(-2.5, 2.5)) +
+  theme(
+    plot.background = element_rect(
+      fill = '#f5f9ff',
+      color = 'black')) + 
+  geom_richtext(
+    data = data.table(
+      x = zz.guide$id,
+      y = c(-1.5, 1.5, -2, 2, -1.5),
+      label = c(
+        'win',
+        'loss',
+        'score<br>draw',
+        '0-0<br>draw',
+        'champions')), # Add  annotations
+    mapping = aes(x = x, y = y, label = label),
+    color = 'grey10',
+    family = 'Quicksand',
+    size = 2,
+    fill = NA,
+    label.color = NA,
+    hjust = 0.5,
+    vjust = 0.5) +
+  # Add vertical GF/GA labels
+  geom_richtext(
+    data = data.table(
+      x = c(0.5, 0.5),
+      y = c(-1.5, 1.5),
+      label = c(
+        'GA',
+        'GF')), 
+    mapping = aes(x = x, y = y, label = label),
+    angle = 270,
+    color = 'grey10',
+    family = 'Quicksand',
+    size = 2,
+    fill = NA,
+    label.color = NA,
+    hjust = 0.5,
+    vjust = 1)
+  
+
+
+p.text <- ggplot() +
+  geom_textbox(
+    data = data.frame(
+      x = 0.5,
+      y = 0.5,
+      label = "Performance Of The Four FIFA Womens World Cup Champions"),
+    aes(x, y, label = label),
+    color = 'Black',
+    box.color = NA,
+    fill = NA,
+    family = 'Quicksand',
+    size = 5,
+    width = grid::unit(0.9, "npc"), 
+    hjust = 0.5, vjust = 0.5, halign = 0) +
+  scale_y_continuous(limits = c(0.48, 0.51)) + 
+  theme_void() + 
+  theme(plot.margin = margin(0, 0, 0, 0),
+        plot.background = element_rect(fill = '#f5f9ff', color = NA)) 
+
+p.text <- 
+  p.text + inset_element(p.guide, left = 0.7, bottom = 0, right = 1, top = 0.55)
+
 # arrange and save
-p.usa / p.ger / p.nor / p.jpn +
+p.text / (p.usa / p.ger / p.nor / p.jpn) + 
+  plot_layout(
+    heights = c(0.15, 0.85),
+    widths = c(1)) + 
+  plot_annotation(
+    caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)\ninspired by https://sn.ethz.ch/research/soccerbars.html",
+    theme = theme(
+      plot.margin = margin(5, 0, 10, 0),
+      plot.caption = element_text(
+        family = 'Quicksand',
+        size = 8,
+        colour = 'grey10'),
+      plot.background = element_rect(
+        fill = '#f5f9ff',
+        color = NA))) + 
   ggsave(
-    filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
-    width = 8, height = 10, device = 'png'
-  )
+    filename = paste0(
+      getwd(),
+      '/plots/',
+      tidy.week,
+      '.png'),
+    width = 8, height = 10, device = 'png')
+
+
+
+
+
+
+
 
