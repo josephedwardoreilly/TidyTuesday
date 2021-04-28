@@ -80,7 +80,7 @@ build.plot <- function(team = 'USA', df, dt, wc.index, dt.champions){
     # add timeline 
     geom_hline(yintercept = 0, size = .5) +
     # add wc delimiter lines
-    geom_vline(xintercept = wc.index$md, linetype = 3, color = 'grey70', size = .25) +
+    geom_vline(xintercept = wc.index$md, linetype = 3, color = 'grey30', size = .25) +
     # Draw bars
     geom_polygon(
       aes(
@@ -382,6 +382,12 @@ pal.nor <- c(
   'loss' = '#d3162f'
 )
 
+pal.guide <- c(
+  'win' = 'white',
+  'draw' = 'white',
+  'loss' = 'white'
+)
+
 
 # Text labels marking each world cup year - add to the top patchwork plot
 df.wc.labels <- data.frame(
@@ -430,7 +436,7 @@ p.usa <- build.plot('USA', df, dt, wc.index, dt.champions) +
                 label.color = NA,
                 hjust = 0,
                 vjust = 0.5) +
-  #theme(plot.margin = margin(75, 30, 10, 30)) + 
+  theme(plot.margin = margin(0, 30, 10, 30)) + 
   labs(title = 'USA')
   
 p.jpn <- build.plot('JPN', df, dt, wc.index, dt.champions) + 
@@ -487,24 +493,25 @@ dt.guide.champions <- merge(
   by = 'id')
 
 p.guide <- build.guide(df.guide, dt.guide, dt.guide.champions) +
-  scale_fill_manual(values = pal.usa) + 
+  scale_fill_manual(values = pal.guide) + 
   theme_void() + 
   scale_x_continuous(limits = c(0, 10.5)) + 
   scale_y_continuous(limits = c(-2.5, 2.5)) +
   theme(
     plot.background = element_rect(
       fill = '#f5f9ff',
-      color = 'black')) + 
+      color = NA)) + 
   geom_richtext(
     data = data.table(
-      x = zz.guide$id,
-      y = c(-1.5, 1.5, -2, 2, -1.5),
+      # Account for offset
+      x = df.guide[ , .SD[2, .(x = x + (width/2))], by = .(id)][, x],
+      y = c(2.5, 1.5, 2, 2, -2),
       label = c(
         'win',
         'loss',
         'score<br>draw',
         '0-0<br>draw',
-        'champions')), # Add  annotations
+        'World Cup<br>champions')), # Add  annotations
     mapping = aes(x = x, y = y, label = label),
     color = 'grey10',
     family = 'Quicksand',
@@ -536,16 +543,16 @@ p.guide <- build.guide(df.guide, dt.guide, dt.guide.champions) +
 p.text <- ggplot() +
   geom_textbox(
     data = data.frame(
-      x = 0.5,
+      x = 0,
       y = 0.5,
-      label = "Performance Of The Four FIFA Womens World Cup Champions"),
+      label = "<b>Performance Of The Four FIFA Women's World Cup Winning Nations At Each Tournament</b>"),
     aes(x, y, label = label),
     color = 'Black',
     box.color = NA,
     fill = NA,
     family = 'Quicksand',
     size = 5,
-    width = grid::unit(0.9, "npc"), 
+    width = grid::unit(0.75, "npc"), 
     hjust = 0.5, vjust = 0.5, halign = 0) +
   scale_y_continuous(limits = c(0.48, 0.51)) + 
   theme_void() + 
@@ -553,7 +560,7 @@ p.text <- ggplot() +
         plot.background = element_rect(fill = '#f5f9ff', color = NA)) 
 
 p.text <- 
-  p.text + inset_element(p.guide, left = 0.7, bottom = 0, right = 1, top = 0.55)
+  p.text + inset_element(p.guide, left = 0.6, bottom = 0, right = 0.9, top = 0.55)
 
 # arrange and save
 p.text / (p.usa / p.ger / p.nor / p.jpn) + 
