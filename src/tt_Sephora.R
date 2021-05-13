@@ -76,11 +76,11 @@ ideal.sample[, x.axs := rep_len(1:(length(unique(ideal.sample$bin))), nrow(ideal
 ideal.sample[, y.axs := sort(rep(1:100, 10))]
 
 # Plotting ----------------------------------------------------------------
-bg <- '#ededf5'
+bg <- '#EDF5FC'
 
 theme_set(
   theme_minimal(base_size = 15, 
-                base_family = 'KiwiMaru-Regular'
+                base_family = "DIN Next LT Pro" 
   ))
 
 theme_update(
@@ -132,22 +132,23 @@ p.top.ten <- ggplot(top.ten, aes(x = bin, y = ord))+
 
 
 # Plot a sample of the observed distribution of shades
-p.obs <- ggplot(dist.sample, aes(x = x.axs, y = y.axs, fill = ID))+
+p.obs <- ggplot(dist.sample, aes(x = x.axs, y = rev(y.axs), fill = ID))+
   geom_tile(aes(fill = ID), color = 'black')+
   scale_fill_manual(values = setNames(dist.sample$hex, dist.sample$ID)) + 
   theme(legend.position = 'none',
         plot.title = element_text(color = 'grey30')) + 
-  ggtitle('(b) observed distribution of shades') + 
-  coord_cartesian(expand = FALSE)
+  ggtitle('(b) observed distribution of shades') +
+  coord_polar()
 
 # Plot a sample of the expected distribution of shades
-p.expect <- ggplot(ideal.sample, aes(x = x.axs, y = y.axs, fill = ID))+
-  geom_tile(aes(fill = ID), color = 'black')+
-  scale_fill_manual(values = setNames(ideal.sample$hex, ideal.sample$ID)) + 
+p.expect <- ggplot(ideal.sample, aes(x = x.axs, y = rev(y.axs), fill = ID))+
+  geom_tile(aes(fill = ID), color = 'black') +
+  scale_fill_manual(
+    values = setNames(ideal.sample$hex, ideal.sample$ID)) + 
   theme(legend.position = 'none',
         plot.title = element_text(color = 'grey30')) + 
   ggtitle('(c) expected distribution of shades') + 
-  coord_cartesian(expand = FALSE)
+  coord_polar()
 
 
 # Plot the title and body text 
@@ -156,7 +157,7 @@ pt.body <- ggplot() +
   geom_textbox(
     data = data.frame(
       x = 0.1,
-      y = 0.80,
+      y = 0.70,
       label = 'The distribution of the lightness of foundation shades listed on Sephora and Ulta is not uniform. Plot (a) shows the colour distribution of foundation shades from the 10 largest brands, as measured by the number of unique products the brand produces. Each tile represents a single foundation and its associated shade. For each brand, foundation shades are placed into 10 bins of equal width based on the lightness of the shade. Brands are presented in order of how biased towards lighter shades their range is - from least biased on the left, to most biased on the right. 
   
   Plot (b) shows a random sample of 1000 foundation shades from the observed distribution of foundation shades, whereas plot (c) shows a sample of 1000 foundation shades obtained from a uniform distribution of shades. It is clear that the observed distribution of shades is biased towards lighter shades, with deeper shades being under-represented.'),
@@ -164,7 +165,7 @@ pt.body <- ggplot() +
     color = 'grey30',
     box.color = NA,
     fill = NA,
-    family = 'KiwiMaru-Regular',
+    family = "DIN Next LT Pro Light" ,
     size = 4.5,
     width = grid::unit(0.73, "npc"), # 73% of plot panel width
     hjust = 0, vjust = 1
@@ -178,9 +179,9 @@ pt.body <- ggplot() +
     aes(x, y, label = label),
     color = 'black',
     label.color = NA,
-    family = 'KiwiMaru-Regular',
+    family = "DIN Next LT Pro" ,
     fill = NA,
-    size = 7,
+    size = 12,
     hjust = 0.5, vjust = 0.5
   ) +
   # Plot caption
@@ -192,7 +193,7 @@ pt.body <- ggplot() +
     aes(x, y, label = label),
     color = 'grey50',
     label.color = NA,
-    family = 'KiwiMaru-Regular',
+    family = "DIN Next LT Pro" ,
     fill = NA,
     size = 3,
     hjust = 0.5, vjust = 0.5
