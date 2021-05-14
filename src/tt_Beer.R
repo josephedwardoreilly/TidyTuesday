@@ -3,7 +3,6 @@ library(ggplot2)
 library(data.table)
 library(ggtext)
 library(geofacet)
-library(patchwork)
 
 # Data Prep ---------------------------------------------------------------
 # Read the data
@@ -30,11 +29,11 @@ z[, y := rep(1:ceiling(.N/nrow), each = nrow, len = .N), by = state]
 
 # Plotting ----------------------------------------------------------------
 pal <- c('Bronze' = '#782408', 'Silver' = '#D3CBC5', 'Gold' = '#F8A312')
-bg <- '#CFC2A7'
-bg.2 <- '#C5B596'
+bg <- '#ffe1a8'
+bg.2 <- '#fffcf2'
 
 ggplot(z, aes(x = x, y= y, fill = medal)) + 
-  geom_tile(color = 'Black') + 
+  geom_tile(color = '#fffcf2') + 
   scale_x_continuous(expand = c(0,0)) + 
   scale_y_continuous(expand = c(0,0)) +
   scale_fill_manual(values = pal) + 
@@ -53,18 +52,18 @@ ggplot(z, aes(x = x, y= y, fill = medal)) +
         axis.text.x = element_blank(),
         axis.text.y = element_blank(),
         axis.ticks =  element_blank(),
-        text = element_text('Raleway'),
+        text = element_text('Helvetica Neue'),
         plot.background = element_rect(fill = bg.2, color = bg.2),
         plot.margin = margin(c(20, 40 , 20, 40)),
-        plot.caption = element_markdown(family = 'Raleway', colour = 'Black'),
+        plot.caption = element_markdown(family = 'Helvetica Neue', colour = 'Black'),
         plot.title = element_markdown(
-          family = 'Raleway',
+          family = 'Helvetica Neue',
           colour = 'Black',
           hjust = 0.5,
           size = 25,
           margin = margin(20, 20, 10, 20)),
         plot.subtitle = element_textbox(
-          family = 'Raleway',
+          family = 'Helvetica Neue',
           colour = 'grey10',
           size = 20,
           fill = bg.2,
@@ -75,13 +74,13 @@ ggplot(z, aes(x = x, y= y, fill = medal)) +
         strip.text = element_text(
           size = 15,
           color = 'Black',
-          'Raleway', 
+          'Helvetica Neue', 
           hjust = 0, 
           margin = margin(c(1,1,1,1))),
         strip.background = element_rect(color = NA, fill = bg)) +
   labs(title = '**Which State Has Produced The Most Prize Winning Beers In The Last Decade?**',
        subtitle = "In the last ten years (2010-2020) which US state has received the most medals at the Great American Beer Festival for beers that its breweries have produced? Each tile represents a single medal awarded to a beer from a given state, and the tile colour reflects the type of medal awarded (i.e. <span style = 'color:#F8A312;'>**gold**</span>, <span style = 'color:#D3CBC5;'>**silver**</span>, or <span style = 'color:#782408;'>**bronze**</span>).",
-       caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)<br> data from TidyTuesday and Great American Beer Festival") +
+       caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)<br>Data from TidyTuesday and Great American Beer Festival") +
   ggsave(
     filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
     width = 16, height = 10.5, device = 'png')
