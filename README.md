@@ -49,7 +49,7 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 ***
 
 ### [2019-07-09](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_WWC.R) ‍ WWC Winners
-![./plots/2019-07-09.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2020-07-09.png)
+![./plots/2019-07-09.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2019-07-09.png)
 
 ***
 
