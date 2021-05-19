@@ -47,3 +47,13 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 ![./plots/2020-10-20.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2020-10-20.png)
 
 ***
+
+### [2019-07-09](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_WWC.R) ‍ WWC Winners
+![./plots/2020-07-09.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2020-07-09.png)
+
+***
+
+### [2019-01-15](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_launches.R) ‍ Space Launches
+![./plots/2019-01-15.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2019-01-15.png)
+
+***
