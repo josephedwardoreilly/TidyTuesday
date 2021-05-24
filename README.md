@@ -8,6 +8,11 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 
 ***
 
+### [2021-05-18](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Manager.R) ‍ Manager Salary 
+![./plots/2021-05-18.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-05-18.png)
+
+***
+
 ### [2021-05-11](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Broadband.R) ‍ Broadband Access 
 ![./plots/2021-05-11.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-05-11.png)
 
