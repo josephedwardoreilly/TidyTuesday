@@ -5,6 +5,10 @@
 
 Some TidyTuesday plots I have created. All are made in R with ggplot2 and related packages, nothing else (I use data.table for the data preparation).
 
+***
+
+### [2021-05-25](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Mario_Kart.R) ‍ Mario Kart 
+![./plots/2021-05-25.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-05-25.png)
 
 ***
 
