@@ -1,8 +1,6 @@
 library(tidytuesdayR)
 library(ggplot2)
 library(data.table)
-library(patchwork)
-library(ggtext)
 
 # Data Prep ---------------------------------------------------------------
 # Read the data
@@ -11,7 +9,7 @@ tt_data <- tt_load(tidy.week)
     x <- data.table(tt_data$records)
 
     
-z <- x[type == 'Single Lap']
+z <- x[type == 'Three Lap']
 
 # Get first and last records
 setkey(z, track, date)
@@ -51,7 +49,7 @@ ggplot(
     family = 'Apercu Pro',
     color = 'white') + 
   labs(title = 'Improvement In Mario Kart 64 Speedrun Times',
-       subtitle = 'Each bar shows the most recent world record for a single lap of a Mario Kart 64 track, expressed as a percentage of the initial world record for that same track.',
+       subtitle = 'Each bar shows the most recent world record for a three lap speedrun of a Mario Kart 64 track, expressed as a percentage of the initial world record for that same track.',
        caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly) - Data from TidyTuesday and github.com/benediktclaus") + 
   theme(
     axis.title = element_blank(),
