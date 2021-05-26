@@ -23,17 +23,15 @@ z <- z[(year == 2019 & month.num %in% c(11, 12)) |
 
 # Plotting ----------------------------------------------------------------
 # pick colour scheme
-bg <- "#E3E4DB"
-pal <- c("#02091F",
-         "#282CAD",
-         "#082178",
-         "#394C91",
-         "#3496C7",
-         "#15687D")
+bg <- "#E9ECEF"
+pal <- c("#6C757D",
+         "#495057",
+         "#343A40",
+         "#212529")
 
 theme_set(
   theme_minimal(base_size = 15, 
-                base_family = 'Raleway'
+                base_family = 'MaisonNeue-Light'
   ))
 
 theme_update(
@@ -106,7 +104,7 @@ ggplot(z, aes(dt, gain, fill = gamename)) +
                aes(x = x, xend = x.end, y = y, yend = y.end))+
   # game name labels
   geom_textbox(data = game.labels ,
-               family = 'Raleway',
+               family =  'MaisonNeue-Light',
                color = 'grey90',
                box.color = NA,
                fill = NA,
@@ -117,7 +115,7 @@ ggplot(z, aes(dt, gain, fill = gamename)) +
                aes(x = dt, y = gain, label = label)) + 
   # text labels
   geom_textbox(data = text.labels,
-               family = 'Raleway',
+               family =  'MaisonNeue-Light',
                inherit.aes = FALSE, 
                color = 'grey50',
                box.color = NA,
@@ -131,7 +129,7 @@ ggplot(z, aes(dt, gain, fill = gamename)) +
   labs(
     title = "Revisiting An Old Friend In Lockdown",
     subtitle = "Data from Steam shows that the average number of people playing older versions of **Football Manager** increased dramatically at the start of the covid-19 pandemic.",
-    caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)<br>Data from TidyTuesday and steamcharts.com") +
+    caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)<br>Data from TidyTuesday and steamcharts.com") +
   ggsave(
     filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
     width = 16, height = 10.5, device = 'png')
