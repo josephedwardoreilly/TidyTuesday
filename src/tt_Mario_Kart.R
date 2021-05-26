@@ -46,9 +46,9 @@ ggplot(
   geom_text(
     aes(
       label = paste0(round(100-perc, 0),' %'),
-      x = 99.75 - perc), 
+      x = 99.9 - perc), 
     size = 3,
-    family = 'BrandonGrotesque-Regular',
+    family = 'Apercu Pro',
     color = 'white') + 
   labs(title = 'Improvement In Mario Kart 64 Speedrun Times',
        subtitle = 'Each bar shows the most recent world record for a single lap of a Mario Kart 64 track, expressed as a percentage of the initial world record for that same track.',
@@ -56,21 +56,21 @@ ggplot(
   theme(
     axis.title = element_blank(),
     text = element_text(
-      family = 'BrandonGrotesque-Black',
+      family = 'Apercu Condensed Pro Medium',
       color = 'white'),
     plot.title = element_text(
-      family = 'BrandonGrotesque-Regular',
+      family = 'Apercu Pro',
       size = 12,
       hjust = 1,
       color = 'white'),
     plot.title.position = 'plot',
     plot.subtitle = element_text(
-      family = 'BrandonGrotesque-Regular',
+      family = 'Apercu Pro Light',
       size = 6,
       hjust = 1,
       color = 'white'),
     plot.caption  = element_text(
-      family = 'BrandonGrotesque-Light',
+      family = 'Apercu Pro Light',
       size = 5,
       hjust = 1,
       color = 'white'),
@@ -80,7 +80,7 @@ ggplot(
     axis.text.y = element_text(
       color = 'white',
       size = 6,
-      family = 'BrandonGrotesque-Light'),
+      family = 'Apercu Pro'),
     panel.grid = element_blank(),
     plot.background = element_rect(
       fill = '#233D4D',
