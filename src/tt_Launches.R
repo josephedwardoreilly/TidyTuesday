@@ -58,9 +58,9 @@ pt.body <- ggplot() +
       y = 0.80,
       label = body.text),
   aes(x, y, label = label),
-  color = 'grey70',
+  color = 'grey90',
   box.color = NA,
-  family = 'Antonio Light',
+  family = 'ApercuCondensedPro-Regular',
   fill = NA,
   size = 4,
   width = grid::unit(0.6, "npc"), halign = 0.5) + 
@@ -80,21 +80,21 @@ p.main <- ggplot(x, aes(x = launch_date, y = 1, color = agency_type, fill = agen
     limits = c(0.3, 1.2))+
   coord_polar() +
   labs(title = 'Space - An Increasingly Private Enterprise', 
-       caption = "Visualisation by Joe O'Reilly (josephedwardoreilly@github.com)\nData from TidyTuesday and planet4589.org/space/lvdb/index.html") +
+       caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\nData from TidyTuesday and planet4589.org/space/lvdb/index.html") +
   scale_color_manual(values = pal) +
   theme(
     legend.position = 'none',
     panel.background = element_rect(color = NA, fill = bg),
     panel.spacing = unit(.5, "lines"),
     axis.text.x = element_text(color = 'grey70'),
-    text = element_text('Antonio'),
+    text = element_text('ApercuPro-Regular'),
     plot.background = element_rect(fill = bg, color = bg),
     plot.margin = margin(c(20, 40 , 20, 40)),
     plot.caption = element_text(
-      family = 'Antonio Light',
+      family = 'ApercuPro-Regular',
       colour = 'grey50'),
     plot.title = element_text(
-      family = 'Antonio',
+      family = 'ApercuCondensedPro-Regular',
       colour = 'grey90',
       hjust = 0.5,
       size = 30,
