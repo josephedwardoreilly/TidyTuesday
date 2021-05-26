@@ -21,15 +21,15 @@ g8[country_code == 'RU', `:=`(entry = as.Date('1997-06-20'),
 focal.countries <- c('CN', "FR", 'GB', 'RU', 'US')
 
 # Background colour
-bg <- '#3b3b3b'
+bg <- '#1E152A'
 
 # assign the focal countries their own colours
 pal.2 <- c(
-  CN = '#9792E3',
-  FR = '#FEB95F',
-  GB = '#F71735',
-  RU = '#449DD1',
-  US = '#6EEB83')
+  CN = '#FE5F55',
+  FR = '#DBBBF5',
+  GB = '#6E8387',
+  RU = '#3CBBB1',
+  US = '#FFBE0B')
 
 # Get voting pattern by country
 # No need for rolling joins as membership of comparator.org has one start and 
@@ -132,36 +132,66 @@ voting.pattern <- rbindlist(
 # Plotting ----------------------------------------------------------------
 theme_set(
   theme_minimal(base_size = 15, 
-                base_family = 'Roboto'
+                base_family = 'ProximaNova-Regular'
                 ))
 
 theme_update(
-  panel.background = element_rect(color = bg, fill = bg),
+  panel.background = element_rect(
+    color = bg,
+    fill = bg),
   panel.grid.major = element_blank(),
   panel.grid.minor = element_blank(),
   panel.grid.major.y = element_blank(),
   panel.spacing = unit(2, "lines"),
-  panel.border = element_rect(color = 'grey', fill = NA),
-  axis.line.x = element_line(size = 0.2, color = 'grey'),
+  panel.border = element_rect(
+    color = NA,
+    fill = NA),
+  axis.line.x = element_line(
+    size = 0.2,
+    color = 'grey'),
   axis.title.x = element_blank(),
-  axis.title.y = element_text(color = "white", margin = margin(r = 7)),
-  axis.text = element_text(color = "white"),
-  axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5, size = 7),
-  axis.text.y = element_text(size = 7),
+  axis.title.y = element_text(
+    color = "white",
+    margin = margin(r = 7)),
+  axis.text = element_text(
+    color = "white"),
+  axis.text.x = element_text(
+    angle = 45,
+    vjust = 0.5,
+    hjust=0.5,
+    size = 7),
+  axis.text.y = element_text(
+    size = 7),
   axis.ticks =  element_blank(),
   axis.ticks.length = unit(.06, "lines"),
   legend.position = "plot",
-  plot.title = element_text(hjust = 0, color = "black", 
-                            size = 21, margin = margin(t = 10, b = 35)),
-  plot.subtitle = element_text(hjust = 0, face = "bold", color = "grey30",
-                               size = 14, margin = margin(0, 0, 25, 0)),
+  plot.title = element_text(
+    hjust = 0,
+    color = "black", 
+    family = 'ProximaNova-Regular',
+    size = 21,
+    margin = margin(t = 10, b = 35)),
+  plot.subtitle = element_text(
+    hjust = 0,
+    face = "bold",
+    color = "grey30",
+    family = 'ProximaNova-Regular',
+    size = 14, 
+    margin = margin(0, 0, 25, 0)),
   plot.title.position = "plot",
-  plot.caption = element_text(color = "white", size = 10, hjust = 1,
-                              lineheight = 1.05, margin = margin(30, 0, 0, 0)),
+  plot.caption = element_text(
+    color = "white",
+    size = 10,
+    hjust = 1,
+    lineheight = 1.05,
+    margin = margin(30, 0, 0, 0)),
   plot.caption.position = "plot", 
   plot.background = element_rect(fill = bg, color = bg),
   plot.margin = margin(c(10, 5 ,10, 10)),
-  strip.text = element_text(color = 'white')
+  strip.text = element_text(
+    color = 'white',
+    hjust = 0,
+    family = 'ProximaNova-Regular')
 )
 
 # Text labels describing Russian G8/UN participation
@@ -183,44 +213,56 @@ df.russia.labels <- data.frame(
 # Line plots through time 
 py <- ggplot(voting.pattern[Y >= 1980 & country.vote == 'yes'],
        aes(x= Y, y = perc, group = code, color = code))+
-  geom_line() + 
   geom_vline(xintercept = c(1991.89 - 1980, # Russia begins
                             1998.45 - 1980, # Russia joins
                             2014.25 - 1980), # Russia excluded 
-             color = 'grey50', 
-             linetype = 'dotted',
-             alpha = 0.75) +
+             color = 'white', 
+             linetype = 'solid',
+             alpha = 0.75,
+             size = .125) +
+  geom_line() + 
   ylab('% of member votes cast in the same direction') +
   scale_color_manual(values = pal.2)+
   scale_x_discrete(breaks = seq(1980, 2019, by=5)) + 
   facet_wrap(.~comparator, strip.position = 'right', ncol = 1) + 
-  theme(strip.text = element_blank(),
-        strip.background = element_blank()) + 
-  geom_richtext(data = df.russia.labels, # Add Russia annotations
-            mapping = aes(x = x, y = y, label = label),
-            color = 'grey50',
-            family = 'Roboto',
-            size = 3,
-            fill = NA,
-            label.color = NA,
-            hjust = 0.5,
-            vjust = 0)
+  theme(
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.line.x=element_blank(),
+    panel.grid.major.y = element_line(
+    colour = 'grey20',
+    linetype = 3)) + 
+  geom_richtext(
+    data = df.russia.labels, # Add Russia annotations
+    mapping = aes(x = x, y = y, label = label),
+    color = 'grey50',
+    family = 'ProximaNova-Regular',
+    size = 3,
+    fill = NA,
+    label.color = NA,
+    hjust = 0.5,
+    vjust = 0)
 
 pn <- ggplot(voting.pattern[Y >= 1980 & country.vote == 'no'],
              aes(x= Y, y = perc, group = code, color = code))+
+  geom_vline(
+    xintercept = c(1991.89 - 1980, # Russia begins
+                   1998.45 - 1980, # Russia joins
+                   2014.25 - 1980), # Russia excluded 
+    color = 'white', 
+    linetype = 'solid',
+    alpha = 0.75,
+    size = .125) +
   geom_line() + 
-  geom_vline(xintercept = c(1991.89 - 1980, # Russia begins
-                            1998.45 - 1980, # Russia joins
-                            2014.25 - 1980), # Russia excluded 
-             color = 'grey50', 
-             linetype = 'dotted',
-             alpha = 0.75) +
   ylab('') +
   scale_color_manual(values = pal.2)+
   scale_y_continuous(position = 'right') +
   scale_x_discrete(breaks = seq(1980, 2019, by=5)) + 
   facet_wrap(comparator~., strip.position = 'right', ncol = 1) +
-  theme(axis.text.y = element_blank())
+  theme(axis.text.y = element_blank(),
+        axis.line.x=element_blank(),
+        panel.grid.major.y = element_line(colour = 'grey20',
+                                          linetype = 3))
 
 # Main title 
 pt <- ggplot() + 
@@ -231,9 +273,10 @@ pt <- ggplot() +
       label = "**UN Voting Support For Permanent UN Security Council Members From Other UN Members And The G8**"),
     aes(x, y, label = label),
     color = 'lightgrey',
+    family = 'ProximaNova-Bold',
     box.color = NA,
     fill = NA,
-    size = 5,
+    size = 7,
     width = grid::unit(0.73, "npc"), # 73% of plot panel width
     hjust = 0, vjust = 1, halign = 0.5
   ) +
@@ -301,12 +344,13 @@ pt.body <- ggplot() +
     color = 'lightgrey',
     box.color = NA,
     fill = NA,
+    family = 'ProximaNova-Regular',
     size = 3.25,
     width = grid::unit(0.73, "npc"), # 73% of plot panel width
     hjust = 0, vjust = 1, halign = 0.5
   ) +
   labs(
-    caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com) - Data taken from TidyTuesday 2021, Week 13")+
+    caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly) - Data taken from TidyTuesday 2021, Week 13")+
   xlim(0, 1) +
   ylim(0, 1) +
   theme( #  stop the plot elements being rendered
@@ -335,6 +379,7 @@ py.title <- ggplot() +
       label = "Yes Votes"),
     aes(x, y, label = label),
     color = 'lightgrey',
+    family = 'ProximaNova-Bold', 
     box.color = NA,
     fill = NA,
     size = 4,
@@ -365,6 +410,7 @@ pn.title <- ggplot() +
       label = "No Votes"),
     aes(x, y, label = label),
     color = 'lightgrey',
+    family = 'ProximaNova-Bold',
     box.color = NA,
     fill = NA,
     size = 4,
