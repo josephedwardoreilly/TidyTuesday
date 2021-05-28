@@ -57,6 +57,11 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 
 ***
 
+### [2020-01-21](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Spotify.R) ‍ Spotify Song Evolution - Gaussian Processes
+![./plots/2020-01-21.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2020-01-21.png)
+
+***
+
 ### [2019-07-09](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_WWC.R) ‍ WWC Winners
 ![./plots/2019-07-09.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2019-07-09.png)
 
