@@ -88,7 +88,7 @@ ggplot(dt,
   labs(
     title = 'The 75 Most Credited People On Netflix',
     subtitle = "Hollywood stars are not the most highly credited on Netflix. Each circle represents the number of unique films or TV shows that an individual featured in for a given year. The larger a circle, the more credits a given individual had in that year. The colour of each circle represents the production industry each individual is most prevalent in: Hollywood (USA), Bollywood (India), or Other. The value next to each individual's name is their total number of credits on Netflix.",
-    caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)\nData from TidyTuesday - Kaggle") + 
+    caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\nData from TidyTuesday - Kaggle") + 
   scale_y_discrete(position = "right") +
   xlab('Year Of Release') + 
   guides(
@@ -142,7 +142,7 @@ ggplot(dt,
       size = 32,
       margin = margin(0, 10, 10, 10))) + 
   ggsave(
-    filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
+    filename = here::here('plots', paste0(tidy.week, '.png')),
     width = 10,
     height = 12,
     device = 'png')

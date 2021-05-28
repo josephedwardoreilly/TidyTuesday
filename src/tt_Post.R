@@ -61,7 +61,7 @@ ggplot(
     width = grid::unit(0.25, "npc"),
     box.color = NA,
     color = "white",
-    family = 'Bebas',
+    family = 'Apercu Pro',
     alpha = 0.95) + 
   geom_textbox(
     data = label.d,
@@ -73,7 +73,7 @@ ggplot(
     width = grid::unit(0.2, "npc"),
     box.color = NA,
     color = "grey90",
-    family = 'Bebas',
+    family = 'Apercu Pro',
     alpha = 0.75) +
   geom_textbox(
     data = label.x,
@@ -85,9 +85,9 @@ ggplot(
     width = grid::unit(0.2, "npc"),
     box.color = NA,
     color = "grey20",
-    family = 'Bebas',
+    family = 'Apercu Pro',
     alpha = 0.75) +
-  labs(caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)\nData from TidyTuesday via Cameron and Helbock 2021 - https://doi.org/10.7910/DVN/NUKCNA") + 
+  labs(caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\nData from TidyTuesday via Cameron and Helbock 2021 - https://doi.org/10.7910/DVN/NUKCNA") + 
   theme_void() + 
   guides(
     fill = guide_colourbar(
@@ -97,18 +97,18 @@ ggplot(
       title.hjust = 0.5,
       title = 'Net Change In Number Of Operating Post Offices',
       title.position = 'bottom',
-      label.theme = element_text(family = 'Bebas', color = 'grey50'),
-      title.theme = element_text(family = 'Bebas', color = 'grey50'))) + 
+      label.theme = element_text(family = 'Apercu Pro', color = 'grey50'),
+      title.theme = element_text(family = 'Apercu Pro', color = 'grey50'))) + 
   theme(
     panel.background = element_rect(color = bg, fill = bg),
     plot.background = element_rect(fill = bg, color = bg),
     plot.margin = margin(c(10, 10 , 10, 10)),
     panel.border  = element_blank(),
-    plot.caption = element_text(family = 'Bebas', color = 'grey20'),
+    plot.caption = element_text(family = 'Apercu Pro', color = 'grey20'),
     plot.caption.position = 'plot',
     legend.position = 'bottom') + 
   ggsave(
-    filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
+    filename = here::here('plots', paste0(tidy.week, '.png')),
     width = 20,
     height = 7,
     device = 'png')

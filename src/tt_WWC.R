@@ -564,7 +564,7 @@ p.text / (p.usa / p.ger / p.nor / p.jpn) +
     widths = c(1)) + 
   # Add a caption, exploits plot_annotation() to color the background for coord_equal
   plot_annotation(
-    caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)\nInspired by https://sn.ethz.ch/research/soccerbars.html",
+    caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\nInspired by https://sn.ethz.ch/research/soccerbars.html",
     theme = theme(
       plot.margin = margin(5, 0, 10, 0),
       plot.caption = element_text(
@@ -575,11 +575,7 @@ p.text / (p.usa / p.ger / p.nor / p.jpn) +
         fill = '#f5f9ff',
         color = NA))) + 
   ggsave(
-    filename = paste0(
-      getwd(),
-      '/plots/',
-      tidy.week,
-      '.png'),
+    filename = here::here('plots', paste0(tidy.week, '.png')),
     width = 8, height = 10, device = 'png')
 
 

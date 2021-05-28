@@ -80,9 +80,9 @@ ggplot(z, aes(x = x, y= y, fill = medal)) +
         strip.background = element_rect(color = NA, fill = bg)) +
   labs(title = '**Which State Has Produced The Most Prize Winning Beers In The Last Decade?**',
        subtitle = "In the last ten years (2010-2020) which US state has received the most medals at the Great American Beer Festival for beers that its breweries have produced? Each tile represents a single medal awarded to a beer from a given state, and the tile colour reflects the type of medal awarded (i.e. <span style = 'color:#F8A312;'>**gold**</span>, <span style = 'color:#D3CBC5;'>**silver**</span>, or <span style = 'color:#782408;'>**bronze**</span>).",
-       caption = "Visualisation by Joe O'Reilly (josephedwardoreilly.github.com)<br>Data from TidyTuesday and Great American Beer Festival") +
+       caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)<br>Data from TidyTuesday and Great American Beer Festival") +
   ggsave(
-    filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
+    filename = here::here('plots', paste0(tidy.week, '.png')),
     width = 16, height = 10.5, device = 'png')
 
 

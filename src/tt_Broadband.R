@@ -116,5 +116,5 @@ ggplot(
     plot.caption.position = 'plot') +
   # Save to disk
   ggsave(
-    filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
+    filename = here::here('plots', paste0(tidy.week, '.png')),
     width = 15.5, height = 11, device = 'png')

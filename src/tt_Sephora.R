@@ -228,7 +228,7 @@ pt.body +
     design = "122
               134") +
   ggsave(
-    filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
+    filename = here::here('plots', paste0(tidy.week, '.png')),
     width = 16, height = 10.5, device = 'png')
 
 

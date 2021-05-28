@@ -130,7 +130,7 @@ p + inset_element(
   clip = FALSE,
   align_to = "full") +
   ggsave(
-    filename = paste0(getwd(), '/plots/', tidy.week, '.png'),
+    filename = here::here('plots', paste0(tidy.week, '.png')),
     width = 10.5, height = 10.5, device = 'png')
 
 
