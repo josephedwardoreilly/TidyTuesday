@@ -14,7 +14,7 @@ y <- y[!is.na(date)]
 y[, YEAR := as.integer(format(date, '%Y'))]
 
 # Calculate annual summary stats
-y <- y[YEAR > 1980, .(
+y <- y[YEAR >= 1980, .(
   danceability = mean(danceability),
   energy = mean(energy),
   speechiness = mean(speechiness),
@@ -24,7 +24,7 @@ y <- y[YEAR > 1980, .(
   by = YEAR]
 
 # Bring Year onto the same scale as the other measures
-y[, YEAR := (YEAR - 1981)/ 100]
+y[, YEAR := (YEAR - 1980)/ 100]
 
 
 
@@ -86,8 +86,8 @@ k2 <- rbindlist(k2, idcol = 'var')
 k2[, var := toupper(var)]
 
 # Rescale the measure of year
-k[, YEAR := (YEAR * 100) + 1981]
-k2[, YEAR := (YEAR * 100) + 1981]
+k[, YEAR := (YEAR * 100) + 1980]
+k2[, YEAR := (YEAR * 100) + 1980]
 
 # Plotting ----------------------------------------------------------------
 pal <- c('#00A7E1', '#69A197', '#034732', '#f230aa', '#006BA6', '#C1121F')
@@ -119,21 +119,25 @@ ggplot(
   guides(color = FALSE, fill = FALSE) +
   labs(
     title = 'Bayesian Gaussian Process Modelling Of Spotify Song Characteristics Through Time',
-    subtitle = 'These plots show the relative evolution of the characteristics of songs listed on Spotify, averaged by year of release.\nEach point represents the mean characteristic of all songs released in a given year.\nEach line represents a possible functional relationships between year of release and the characteristic, as sampled from the posterior distribution.',
+    subtitle = 'These plots show the relative evolution of the characteristics of songs listed on Spotify, averaged by year of release.\nEach point represents the mean characteristic of all songs released in a given year.\nEach line represents a modelled functional relationship between year of release and a characteristic, as sampled from the posterior distribution of a Gaussian process.',
     caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly) - Data from TidyTuesday and Spotify")+
   theme(
-    plot.margin = margin(20, 10, 0, 10),
+    plot.margin = margin(10, 10, 0, 10),
     plot.title = element_text(
       size = 15,
       color = 'black',
       family = 'DIN Next LT Pro Bold',
-      margin = margin(0, 10, 0, 10)),
+      margin = margin(0, 10, 5, 10)),
+    plot.subtitle = element_text(
+      size = 10,
+      color = 'black',
+      family = 'DIN Next LT Pro Light',
+      margin = margin(0, 10, 10, 10)),
     plot.caption = element_text(
       size = 7,
       color = 'black',
       family = 'DIN Next LT Pro',
-      margin = margin(20, 10, 5, 10)
-    ),
+      margin = margin(10, 10, 5, 10)),
     text = element_text(
       color = 'black',
       family = 'DIN Next LT Pro Light'),
@@ -147,6 +151,7 @@ ggplot(
     panel.spacing.x = unit(1.5, "lines"),
     panel.spacing.y = unit(2.5, "lines"),
     axis.text.x = element_text(size = 5), 
+    panel.grid.major.x = element_line(size = .05, color = 'black'),
     panel.background = element_rect(
       fill = '#FEF8EC',
       color = NA),
