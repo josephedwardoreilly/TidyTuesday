@@ -52,6 +52,11 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 
 ***
 
+### [2021-03-09](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Bechdel.R) ‍ Bechdel Test
+![./plots/2021-03-09.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-03-09.png)
+
+***
+
 ### [2020-10-20](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Beer.R) ‍ Beer Medal Winners
 ![./plots/2020-10-20.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2020-10-20.png)
 
