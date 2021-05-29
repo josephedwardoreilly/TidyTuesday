@@ -50,24 +50,30 @@ pp_estimate <- posterior_samples(m) %>%
 
 # Some colours
 pal <- c('#B9314F', '#F2AF29')
-pal_2 <- c('#ffeda0', '#feb24c', '#f03b20')
+pal_2 <- c('#4D6CFA', '#06D6A0', '#05668D')
+
+# Some dimensions set dynamically
+dims <- posterior_samples(m) %>% 
+  summarise(
+    min = round(signif(min(exp(b_USTRUE)), 2), 1),
+    max = round(signif(max(exp(b_USTRUE)), 2), 1))
 
 # Arbitrary x axis 
 x_labs <- data.frame(
-  x = seq(0.6, 1.2, by = 0.1),
+  x = seq(dims$min, dims$max, by = 0.1),
   y = -0.1,
-  labs = seq(0.6, 1.2, by = 0.1))
+  labs = seq(dims$min, dims$max, by = 0.1))
 
 x_title <- data.frame(
-  x = 0.9,
+  x = (dims$min + dims$max)/2,
   y = -0.175,
   labs = toupper('Odds Ratio')
 )
 
 # Main body text
 p_text <- data.frame(
-  x = 0.9,
-  y = -0.375,
+  x = (dims$min + dims$max)/2,
+  y = -0.4,
   labs = 'This visualisation presents the results from a Bayesian logistic regression to estimate the association between production country (in The USA or outside The USA) and the odds of a film failing the Bechdel test. Each dot represents a sampled odds ratio from the posterior distribution and is coloured according to whether the estimate was above or below one. A value above one supports the hypothesis that films produced in The USA are more likely to pass the Bechdel test than films produced in other countries. The bar underneath the plot represents the 50, 80, and 95 percent limits of the marginal posterior distribution for the odds ratio. On the balance of probability, films produced in The USA are less likely to pass the Bechdel test than those produced elsewhere; P(OR < 1) = PP_ESTIMATE .'
 )
 
@@ -102,7 +108,7 @@ p_text <- p_text %>%
       pattern = '50',
       replacement = paste0(
         "<span style = 'color:",
-        '#f03b20',
+        '#4D6CFA',
         ";'>**50**</span>")
     )) %>%
   mutate(
@@ -111,7 +117,7 @@ p_text <- p_text %>%
       pattern = '80',
       replacement = paste0(
         "<span style = 'color:",
-        '#feb24c',
+        '#06D6A0',
         ";'>**80**</span>")
     )) %>%
   mutate(
@@ -120,7 +126,7 @@ p_text <- p_text %>%
       pattern = '95',
       replacement = paste0(
         "<span style = 'color:",
-        '#ffeda0',
+        '#4D6CFA',
         ";'>**95**</span>")
     ))
 
@@ -162,10 +168,9 @@ posterior_samples(m) %>%
     aes(x = x, y = y, label = labs)) + 
   scale_fill_manual(values = pal) + 
   scale_color_manual(values = pal_2) + 
-  scale_x_continuous(limits = c(0.5, 1.3)) + 
   guides(fill = FALSE, color = FALSE) + 
   labs(
-    title = toupper('Bayesian Estimation of The association between production of a film in The USA \nand the odds of it failing The Bechdel Test'),
+    title = toupper('Bayesian Estimation of The association between the production of a film in The USA \nand the odds of it failing The Bechdel Test'),
     caption = toupper("Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\n Data from TidyTuesday and Bechdeltest.com")) + 
   theme(
     plot.margin = margin(10,10,10,10),
