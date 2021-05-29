@@ -128,7 +128,8 @@ p_text <- p_text %>%
 # Build main plot
 posterior_samples(m) %>% 
   ggplot(aes(x = exp(b_USTRUE), fill = stat(x < 1))) +
-  stat_interval(aes(y = -0.035)) +
+  stat_interval(aes(y = -0.035),
+                .width = c(.5, .8, .95)) +
   stat_dots(
     quantiles = 1500,
     scale = .95,
