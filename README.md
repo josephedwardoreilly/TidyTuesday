@@ -7,6 +7,11 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 
 ***
 
+### [2021-06-01](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Survivor.R) ‍ Survivior 
+![./plots/2021-06-01.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-06-01.png)
+
+***
+
 ### [2021-05-25](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Mario_Kart.R) ‍ Mario Kart 
 ![./plots/2021-05-25.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-05-25.png)
 
