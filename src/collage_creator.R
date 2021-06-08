@@ -4,6 +4,7 @@ require(magrittr)
 # Identify all the plots
 all.files <- list.files(here::here('plots'), full.names = TRUE)
 all.files <- all.files[grepl(pattern = 'png', all.files)]
+all.files <- all.files[!grepl('collage.png', all.files)]
 
 # read and rescale all in one go
 all.res <- sapply(all.files, FUN = function(x){
