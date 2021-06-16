@@ -9,6 +9,11 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 
 ***
 
+### [2021-06-15](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Dubois.R) ‍ Du Bois Challenge Tweets
+![./plots/2021-06-15.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-06-15.png)
+
+***
+
 ### [2021-06-08](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Fish.R) ‍ Fish 
 ![./plots/2021-06-01.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-06-08.png)
 
