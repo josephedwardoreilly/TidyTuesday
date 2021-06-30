@@ -1,12 +1,12 @@
 library(tidytuesdayR)
 library(ggplot2)
+library(ggtext)
 library(data.table)
 library(sf)
 library(tidyverse)
 library(biscale)
-library(pals)
-library(patchwork)
-
+library(cowplot)
+library(magick)
 
 
 # Data Prep ---------------------------------------------------------------
@@ -87,14 +87,19 @@ p.main <- ggplot() +
   theme_void() + 
   theme(
     plot.margin = margin(1, 10, 1, 10),
-    strip.text = element_text(hjust = 0),
-    panel.spacing.y = unit(2, "lines"),
+    strip.text = element_text(
+      hjust = 0,
+      size = 10,
+      family = 'Apercu Pro',
+      margin = margin(2, 0, 2, 0)),
+    panel.spacing = unit(2, "lines"),
     axis.title = element_blank(),
     plot.title = element_text(
-      family = 'Helvetica Neue',
+      family = 'Apercu Pro',
       margin = margin(5, 5, 5, 5)),
     plot.background = element_rect(color = NA, fill = 'white')) 
 
+# Draw the legend
 legend.inset <- bi_legend(
   pal = "DkViolet",
   dim = 3,
@@ -103,36 +108,37 @@ legend.inset <- bi_legend(
   size = 10) + 
   theme(plot.background = element_blank(),
         axis.title = element_text(
-          family = 'Helvetica Neue', vjust = 0.5),
+          family = 'Apercu Pro',
+          vjust = 0.5),
         plot.margin = margin(5, 5, 5, 5))
 
+# Draw the blurb text and title
 p.text.body <- ggplot() + 
-  # Text body
+  # Blurb first
   geom_textbox(
     data = data.frame(
       x = 0.1,
       y = 0.70,
-      label = 'The Scottish Index Of Multiple Deprivation 2020 (SIMD) is an area based ranked index of social deprivation. It is constructed from seven domains, or aspects, of deprivation. Each area is ranked within each domain and then the ranks over all seven domains are combined to create the final SIMD rank. These plots show the difference between the mean SIMD rank for a local area, and the domain specific rank for that same area. **Note: SIMD ranks most to least deprived in ascending order, for these plots the ranking is inverted, such that a lower rank indicates less social deprivation. This has been done to improve ease of interpretation**'),
+      label = 'These bivariate plots show the number and the median hourly cost of callouts for animal rescue operations by The London Fire Brigade. Data are presented for each borough of London and by the type of animal being rescued.'),
     aes(x, y, label = label),
     color = 'black',
     box.color = NA,
     fill = 'NA',
-    family = "Helvetica Neue" ,
-    size = 2,
+    family = "Apercu Pro" ,
+    size = 3,
     width = grid::unit(0.75, "npc"), 
     hjust = 0, vjust = 0.5
   ) +
   # Text title
-  geom_richtext(
+  geom_text(
     data = data.frame(
       x = 0.5,
       y = 0.95,
-      label = 'Animal Rescue Callouts <br>By London Fire Brigade (2009-2021)'),
+      label = 'Animal Rescue Callouts\nBy London Fire Brigade (2009-2021)'),
     aes(x, y, label = label),
     color = 'black',
-    label.color = NA,
-    fill = NA,
-    size = 3,
+    family = 'Apercu Pro Black',
+    size = 3.5,
     hjust = 0.5, vjust = 0.5
   ) +
   xlim(0, 1) +
@@ -143,18 +149,20 @@ p.text.body <- ggplot() +
     plot.background = element_rect(fill = NA, color = NA)
   )
 
-legend <- ggdraw() +
+# Bind all of the plots on one plot
+p.total <- ggdraw() +
   draw_plot(p.main, 0, 0, 1, 1) +
-  draw_plot(p.text.body, x = 0.85, y = 0.25, scale = 0.35, hjust = 0.5) +
-  draw_plot(legend.inset, x = 0.85, y = -0.25, scale = .35, hjust = 0.5)
+  draw_plot(p.text.body, x = 0.85, y = 0.15, scale = 0.35, hjust = 0.5) +
+  draw_plot(legend.inset, x = 0.85, y = -0.15, scale = .35, hjust = 0.5)
 
+# Save to disk
 ggsave(
   filename = here::here('plots', paste0(tidy.week, '.png')),
   width = 11,
   height = 7,
   device = 'png')
   
-# reread the file, use imagemagick to trim the whitespace
+# reread the file, use imagemagick to trim the whitespace, save again
 image_read(here::here('plots', paste0(tidy.week, '.png'))) %>%
 image_trim() %>%
 image_border(geometry = "50x50",color = '#FFFFFF') %>%
