@@ -84,7 +84,7 @@ p.main <- ggplot() +
   facet_wrap(
     .~animal_group_parent, 
     ncol  = 2) +
-  labs(caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\nData from TidyTuesday and Bechdeltest.com") + 
+  labs(caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\nData from TidyTuesday and london.gov.uk") + 
   theme_void() + 
   theme(
     plot.margin = margin(1, 10, 1, 1),
