@@ -84,9 +84,10 @@ p.main <- ggplot() +
   facet_wrap(
     .~animal_group_parent, 
     ncol  = 2) +
+  labs(caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\nData from TidyTuesday and Bechdeltest.com") + 
   theme_void() + 
   theme(
-    plot.margin = margin(1, 10, 1, 10),
+    plot.margin = margin(1, 10, 1, 1),
     strip.text = element_text(
       hjust = 0,
       size = 10,
@@ -94,17 +95,21 @@ p.main <- ggplot() +
       margin = margin(2, 0, 2, 0)),
     panel.spacing = unit(2, "lines"),
     axis.title = element_blank(),
-    plot.title = element_text(
+    plot.caption = element_text(
       family = 'Apercu Pro',
-      margin = margin(5, 5, 5, 5)),
-    plot.background = element_rect(color = NA, fill = 'white')) 
+      size = 6,
+      color = 'grey20',
+      hjust = 0),
+    plot.background = element_rect(
+      color = NA,
+      fill = 'white')) 
 
 # Draw the legend
 legend.inset <- bi_legend(
   pal = "DkViolet",
   dim = 3,
   ylab = "Increasing \nNumber Of Callouts",
-  xlab = "Increading \nMedian Cost Of Callout",
+  xlab = "Increasing \nMedian Cost Of Callout",
   size = 10) + 
   theme(plot.background = element_blank(),
         axis.title = element_text(
@@ -154,6 +159,7 @@ p.total <- ggdraw() +
   draw_plot(p.main, 0, 0, 1, 1) +
   draw_plot(p.text.body, x = 0.85, y = 0.15, scale = 0.35, hjust = 0.5) +
   draw_plot(legend.inset, x = 0.85, y = -0.15, scale = .35, hjust = 0.5)
+  
 
 # Save to disk
 ggsave(
@@ -165,7 +171,7 @@ ggsave(
 # reread the file, use imagemagick to trim the whitespace, save again
 image_read(here::here('plots', paste0(tidy.week, '.png'))) %>%
 image_trim() %>%
-image_border(geometry = "50x50",color = '#FFFFFF') %>%
+image_border(geometry = "20x20",color = '#FFFFFF') %>%
 image_write(
   path = here::here('plots', paste0(tidy.week, '.png')),
   format = "png")
