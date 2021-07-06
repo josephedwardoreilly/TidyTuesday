@@ -9,6 +9,11 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 
 ***
 
+### [2021-07-06](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Independence.R) ‍ Independence Days
+![./plots/2021-07-06.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-07-06.png)
+
+***
+
 ### [2021-06-29](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Animals.R) ‍ Animal Rescues
 ![./plots/2021-06-29.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-06-29.png)
 
