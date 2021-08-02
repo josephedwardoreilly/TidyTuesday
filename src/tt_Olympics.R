@@ -115,13 +115,16 @@ ggplot(
   labs(
     title = 'National Medal Rates At The Summer And Winter Olympic Games', 
     subtitle = subtitle.text,
-    caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)\nData from TidyTuesday and ft.com & fivethirtyeight.com") + 
+    caption = "Visualisation by Joe O'Reilly (github.com/josephedwardoreilly)<br>Data from TidyTuesday and ft.com & fivethirtyeight.com") + 
   theme(
-    plot.margin = margin(10, 10, 0, 10),
+    plot.margin = margin(10, 10, 10, 10),
     text = element_text(colour = '#F8F0FB', family = 'Lato'),
     plot.subtitle = element_markdown(
       family = 'Lato',
       margin = margin(0,0,20,0)),
+    plot.caption = element_markdown(
+      family = 'Lato',
+      margin = margin(5,5,5,5)),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(), 
     panel.grid.major.x = element_line(
