@@ -9,7 +9,7 @@ Some TidyTuesday plots I have created. All are made in R with ggplot2 and relate
 
 ***
 
-### [2021-07-27](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Olympics.R) ‍ Drought
+### [2021-07-27](https://github.com/josephedwardoreilly/TidyTuesday/blob/master/src/tt_Olympics.R) ‍ Olympics
 ![./plots/2021-07-27.png](https://raw.githubusercontent.com/josephedwardoreilly/TidyTuesday/master/plots/2021-07-27.png)
 
 ***
